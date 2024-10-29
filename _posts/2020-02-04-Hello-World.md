@@ -115,7 +115,7 @@ hello world!
 
 回到本地仓库，commit and push changes。此时可以进入仓库的 Actions 页面查看 Workflow。
 
-等待完成后就可以通过 url 进入自己的博客啦！
+需要等待几分钟，Deployments完成后就可以通过 url 进入自己的博客啦！
 
 ## 后记
 
