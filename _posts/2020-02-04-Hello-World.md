@@ -1,14 +1,11 @@
 ---
-​---
 title: Hello World ！
 date: 2020-02-04 12:12:12 +0800
 categories: [TOP_CATEGORIE, SUB_CATEGORIE]
-description: Short summary of the post.
+description: 
 pin: true
-tags: [生活]     # TAG names should always be lowercase
-​---
+tags: [生活] 
 ---
-
 
 ## 前言
 
@@ -16,7 +13,7 @@ Blog 就这么开通了。
 
 很早就想搭建自己的 Blog ，不曾料想踩了很多坑。。。
 
-2020 年， Blog 总算是搭建好了。
+现在 Blog 总算是搭建好了。
 
 ---
 
@@ -122,5 +119,5 @@ hello world!
 
 如果你恰好逛到了这里，希望你也能喜欢这个博客主题，感兴趣的话可以自己动手搭建一个。
 
-—— 后记于 2020.2
+—— 后记于 2020.02
 
