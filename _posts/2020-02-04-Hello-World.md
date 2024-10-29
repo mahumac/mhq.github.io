@@ -11,7 +11,9 @@ tags: [生活]
 
 Blog 就这么开通了。
 
-很早就想搭建自己的 Blog ，不曾料想踩了很多坑。。。
+之前一直使用OneNote记录了大量笔记，后续因为OneNote一直不支持markdown格式，只能使用typora将md文件保存在本地。 
+
+很早就想搭建自己的 Blog ，不曾料想踩了很多坑。。。，就放弃了
 
 现在 Blog 总算是搭建好了。
 
@@ -21,12 +23,12 @@ Blog 就这么开通了。
 
 接下来说说搭建这个博客的技术细节。  
 
-正好之前就有关注过 [GitHub Pages](https://pages.github.com/) + [Jekyll](http://jekyllrb.com/) 快速 Building Blog 的技术方案，非常轻松时尚。
+之前就有关注过 [GitHub Pages](https://pages.github.com/) + [Jekyll](http://jekyllrb.com/) 快速 Building Blog 的技术方案，非常轻松时尚。
 
 其优点非常明显：
 
 * **Markdown** 带来的优雅写作体验
-* 非常熟悉的 Git workflow ，**Git Commit 即 Blog Post**
+* Git workflow ，**Git Commit 即 Blog Post**，非常方便
 * 利用 GitHub Pages 的域名和免费无限空间，不用自己折腾主机
 	* 如果需要自定义域名，也只需要简单改改 DNS 加个 CNAME 就好了 
 * Jekyll 的自定制非常容易，基本就是个模版引擎
