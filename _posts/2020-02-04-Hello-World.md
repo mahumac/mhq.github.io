@@ -23,7 +23,7 @@ Blog 就这么开通了。
 
 接下来说说搭建这个博客的技术细节。  
 
-之前就有关注过 [GitHub Pages](https://pages.github.com/) + [Jekyll](http://jekyllrb.com/) 快速 Building Blog 的技术方案，非常轻松时尚。
+之前就有关注过 [GitHub Pages](https://pages.github.com/) + [Jekyll](https://jekyllrb.com/) 快速 Building Blog 的技术方案，非常轻松时尚。
 
 其优点非常明显：
 
