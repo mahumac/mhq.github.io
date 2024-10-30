@@ -206,25 +206,25 @@ probe_success{job=~"blackbox_icmp.*"}
 
 **注意：**如果出现 icmp 丢包，blackbox 会返回：
 
-```
+```tex
 probe_success{} = 0                 # 这个是预期的正确结果
 probe_icmp_duration_seconds{} = 0   # 这个是错误的结果，预期的结果应该是空值 或者一个无限大的值。
 ```
 
 比方说 发送了5个 icmp request，中间出现2次丢包，收到了3个 icmp reply :
 
-````
+````bash
 # * 代表出现丢包
 11ms  *   *  9ms  10ms
 ````
 
 如果直接使用 `avg_over_time ( probe_icmp_duration_seconds {} )[5]` 来计算ICMP RTT，结果如下：
 $$
-(11 + + 0 + 0 + 9 + 10) / 5 = 30 / 5 = 6  毫秒
+(11 + 0 + 0 + 9 + 10) / 5 = 30 / 5 = 6  毫秒
 $$
 明显不是预期的结果。预期的 RTT  应该是：
 $$
-(10 + 11 + 10) / 3 = 30 / 3 = 10  毫秒
+(10 + 9 + 10) / 3 = 30 / 3 = 10  毫秒
 $$
 需要排除 `probe_icmp_duration_seconds{} = 0` 的 情况。
 
@@ -320,6 +320,7 @@ groups:
 1） 将 Blackbox Exporter job添加到`prometheus.yml`文件中：
 
 ```yaml
+ scrape_configs:
   # Blackbox Exporter
   - job_name: 'blackbox'
     scrape_interval: 10s
