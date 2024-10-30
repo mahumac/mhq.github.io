@@ -11,11 +11,9 @@ tags: [Prometheus, Juniper, Telemetry, 遥测]
 
 参考文档：
 
-​	[Telemetry configuration example](https://supportportal.juniper.net/s/article/telemetry-configuration-example?language=en_US)
+[Telemetry configuration example](https://supportportal.juniper.net/s/article/telemetry-configuration-example?language=en_US)
 
-​        [Junos Telemetry Interface User Guide | Junos OS | Juniper Networks](https://www.juniper.net/documentation/us/en/software/junos/interfaces-telemetry/index.html)
-
-使用 telegraf 为 gRPC（Junos 遥测接口或 JTI）和 gNMI 配置遥测的示例。
+[Junos Telemetry Interface User Guide](https://www.juniper.net/documentation/us/en/software/junos/interfaces-telemetry/index.html)
 
 ## 配置方法
 
@@ -292,9 +290,9 @@ by (
 )
 ```
 
-显示 options - Legend
+grafana图形显示 options - Legend
 
-```
+```txt
 {{system_id}}: {{interfaces_interface_subinterfaces_subinterface_state_parent_ae_name}} ({{interfaces_interface__name}}) - out- {{interfaces_interface_subinterfaces_subinterface_state_description}}
 ```
 
