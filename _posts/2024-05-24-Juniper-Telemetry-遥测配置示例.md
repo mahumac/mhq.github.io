@@ -292,7 +292,7 @@ by (
 
 grafana图形显示 options - Legend
 
-```txt
+```tex
 {{system_id}}: {{interfaces_interface_subinterfaces_subinterface_state_parent_ae_name}} ({{interfaces_interface__name}}) - out- {{interfaces_interface_subinterfaces_subinterface_state_description}}
 ```
 
