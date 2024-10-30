@@ -179,7 +179,7 @@ curl localhost:9273/metrics | grep sensors
 
 ```yaml
   - job_name: "JTI-HK1-1"
-    scrape_interval: 1s
+    scrape_interval: 1s           # <<< 必须小于telegraf中的 sample_frequency 值
     honor_timestamps: true        # 以metric自带的时间戳为准
     honor_labels: true
     static_configs:
