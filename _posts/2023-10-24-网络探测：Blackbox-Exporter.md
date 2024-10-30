@@ -111,13 +111,13 @@ scrape_configs:
       - source_labels: [__param_module]     # 将内置标签`__param_module`修改为`module`
         target_label: module
       - target_label: __address__
-        replacement: 36.248.36.133:9115
+        replacement: 2.2.2.2:9115
       - target_label: prober                # 自定义标签，SH机房
         replacement: SH
       - target_label: prober_ip             
         replacement: 2.2.2.2                # SH机房探针ip地址
 
-  - job_name: "blackbox_icmp-02"
+  - job_name: "blackbox_icmp-03"
     scrape_interval: 1s
     metrics_path: /probe
     params:
@@ -133,7 +133,7 @@ scrape_configs:
       - source_labels: [__param_module]     # 将内置标签`__param_module`修改为`module`
         target_label: module
       - target_label: __address__
-        replacement: 36.248.36.133:9115
+        replacement: 3.3.3.3:9115
       - target_label: prober                # 自定义标签,BJ机房
         replacement: BJ
       - target_label: prober_ip             
@@ -228,7 +228,7 @@ $$
 $$
 需要排除 `probe_icmp_duration_seconds{} = 0` 的 情况。
 
-应该使用以下PromQL 公式
+应该使用以下PromQL 公式：
 
 ```bash
 # 排除probe_icmp_duration_seconds{}=0的情况, 使用内部子查询（Subquery，1s精度）
@@ -264,7 +264,7 @@ stddev_over_time(
 
 ### 使用 Record 规则 计算 ICMP 丢包
 
-也可以使用 promtheus 记录规则来计算 ICMP 丢包情况
+也可以使用 promtheus 记录规则来计算 ICMP 丢包情况：
 
 ```yaml
 #  prometheus 配置
