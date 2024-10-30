@@ -165,9 +165,9 @@ scrape_configs:
     - 156.248.75.2
     - 156.248.77.3
 ##################
-# 香港机房
+# targets-HKG
 - labels:
-    idc: HK1
+    idc: HK
     profile: CN2
   targets:
     - 154.82.72.2
