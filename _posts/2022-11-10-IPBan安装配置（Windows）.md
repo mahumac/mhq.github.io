@@ -101,7 +101,7 @@ Get-Service IPBan | Restart-Service
 
 `nlog.confg`文件 输出的日志类别
 
-```XML
+```xml
 <?xml version="1.0"?>
 <nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" throwExceptions="false" internalLogToConsole="false" internalLogToConsoleError="false" internalLogLevel="Trace">
   <targets>
@@ -116,8 +116,8 @@ Get-Service IPBan | Restart-Service
 ```
 
 - fileName="${basedir}/logfile.txt"   日志保存位置     
-- maxArchiveFiles=28                     最多保留28份日志文件
-- minlevel=Warn                              日志级别高于info ,可用值"Debug, Info, Warn, Error, Critical"
+- maxArchiveFiles=28                          最多保留28份日志文件
+- minlevel=Warn                                   日志级别高于info ,可用值"Debug, Info, Warn, Error, Critical"
 
 ### 5 Windows 下的 SSH配置
 
