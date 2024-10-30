@@ -42,15 +42,20 @@ set firewall family inet filter ACCEPT-JTI term ACCEPT-JTI then accept
 
 ### 配置安装 Telegraf ：
 
+个人使用的是Ubuntu / Debian，添加repo 并设置一个新的 sources.list文件
+
 ```bash
-echo "deb https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
-# sudo apt-get install influxdb telegraf
-# sudo service influxdb start
+# influxdata-archive_compat.key GPG fingerprint:
+#     9D53 9D90 D332 8DC7 D6C8 D3B9 D8FF 8E1F 7DF8 B07E
+wget -q https://repos.influxdata.com/influxdata-archive_compat.key
+echo '393e8779c89ac8d958f81f942f9ad7fb82a25e133faddaf92e15b16e6ac9ce4c influxdata-archive_compat.key' | sha256sum -c && cat influxdata-archive_compat.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg > /dev/null
+echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main' | sudo tee /etc/apt/sources.list.d/influxdata.list
+sudo apt-get update && sudo apt-get install telegraf
 ```
 
-这是 Telegraf 的配置文件，位于 /etc/telegraf/telegraf.conf
+Telegraf 的配置文件，位于 `/etc/telegraf/telegraf.conf`
 
-可以使用两种方法，二选一。
+可以使用以下两种方法，二选一：
 
 #### 方法一： 使用 inputs.jti_openconfig_telemetry
 
@@ -96,7 +101,7 @@ echo "deb https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stabl
   fielddrop = ["/interfaces/interface/subinterfaces/subinterface/ipv6/neighbors/neighbor/state/is-router"]
 
 [[processors.regex]]
-  # 将匹配的文本替换为指定的文本
+  # 将匹配的文本替换为指定的文本，方便在granfan中设置变量，过滤指定接口
   # 如果"/interfaces/interface/subinterfaces/subinterface/state/description"字段的值为空，将这个字段的值替换为 “-”
   [[processors.regex.fields]]
     key = "/interfaces/interface/subinterfaces/subinterface/state/description"
@@ -109,7 +114,7 @@ echo "deb https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stabl
   
   # Expiration interval for each metric. 0 == no expiration
   expiration_interval = "5s"
-  export_timestamp = true  # 将timestamp 附加到metrics, 让 prometheus以该时间戳为准（不使用prometheus的job scrape 时间戳）
+  export_timestamp = true  # 将timestamp 附加到metrics, 让prometheus以该时间戳为准（不使用prometheus的job scrape时间戳）
   metric_buffer_limit = 100000
 
   [outputs.prometheus_client.tagpass]
@@ -157,37 +162,16 @@ echo "deb https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stabl
        sample_interval = "10s"
  ```
 
-一旦配置完成，就可以配置 VMX 中的接口并建立可访问性，用以下命令启动 Telegraf 服务:
+一旦配置完成之后，启动 Telegraf 服务：
 
 ```bash
-root@ubuntu:/etc/telegraf# systemctl restart telegraf
-root@ubuntu:/etc/telegraf# systemctl status telegraf
-● telegraf.service - Telegraf
-   Loaded: loaded (/lib/systemd/system/telegraf.service; enabled; vendor preset: enabled)
-   Active: active (running) since Wed 2023-04-12 10:00:41 PDT; 5s ago
-    Docs: https://github.com/influxdata/telegraf
-  Main PID: 80274 (telegraf)
-   Tasks: 7 (limit: 2237)
-   Memory: 21.5M
-    CPU: 159ms
-   CGroup: /system.slice/telegraf.service
-       └─80274 /usr/bin/telegraf -config /etc/telegraf/telegraf.conf -config-directory /etc/telegraf/telegraf.d
-Apr 12 10:00:41 ubuntu telegraf[80274]: 2023-04-12T17:00:41Z I! Available plugins: 235 inputs, 9 aggregators, 27 processors, 22 parsers, 57 outputs, >
-Apr 12 10:00:41 ubuntu telegraf[80274]: 2023-04-12T17:00:41Z I! Loaded inputs: jti_openconfig_telemetry
-Apr 12 10:00:41 ubuntu telegraf[80274]: 2023-04-12T17:00:41Z I! Loaded aggregators:
-Apr 12 10:00:41 ubuntu telegraf[80274]: 2023-04-12T17:00:41Z I! Loaded processors:
-Apr 12 10:00:41 ubuntu telegraf[80274]: 2023-04-12T17:00:41Z I! Loaded secretstores:
-Apr 12 10:00:41 ubuntu telegraf[80274]: 2023-04-12T17:00:41Z I! Loaded outputs: prometheus_client
-Apr 12 10:00:41 ubuntu telegraf[80274]: 2023-04-12T17:00:41Z I! Tags enabled: host=ubuntu
-Apr 12 10:00:41 ubuntu systemd[1]: Started Telegraf.
-Apr 12 10:00:41 ubuntu telegraf[80274]: 2023-04-12T17:00:41Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:"ubuntu", Flush Interval:10s
-Apr 12 10:00:41 ubuntu telegraf[80274]: 2023-04-12T17:00:41Z I! [outputs.prometheus_client] Listening on http://[::]:9273/metrics
+systemctl restart telegraf
 ```
 
 查看sensors 的状态: 
 
 ```bash
-root@ubuntu:/etc/telegraf# curl localhost:9273/metrics | grep sensors
+curl localhost:9273/metrics | grep sensors
 ```
 
 ## Prometheus配置
