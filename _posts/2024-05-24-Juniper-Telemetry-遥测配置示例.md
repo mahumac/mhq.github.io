@@ -80,7 +80,7 @@ Telegraf 的配置文件，位于 `/etc/telegraf/telegraf.conf`
   client_id = "Switch"
   tags = {location = "HKG"}        # <<< 自定义tags
 
-  sample_frequency = "2000ms"      # <<< 订阅上报频率，Juniper建议最小值为2s，根据实际情况调整
+  sample_frequency = "10000ms"      # <<< 订阅上报频率，Juniper建议最小值为2s，根据实际情况调整
   sensors = [
     "/junos/system/linecard/cpu/memory",
     "/junos/system/linecard/firewall/",
@@ -138,26 +138,29 @@ Telegraf 的配置文件，位于 `/etc/telegraf/telegraf.conf`
    precision = "0s"
    hostname = ""
  
- [[outputs.prometheus_client]]
-    listen = ":9273"
-    path = "/metrics"
- 
  [[inputs.gnmi]]
-    addresses = ["10.0.0.2:32767"]    # <<< 设备IP
+   addresses = ["10.0.0.2:32767"]    # <<< 设备IP
  
-    [[inputs.gnmi.subscription]]
-       name = "ifcounters"
-       origin = "openconfig-interfaces"
-       path = "/interfaces/interface/state/counters"
-       subscription_mode = "sample"
-       sample_interval = "10s"
+   [[inputs.gnmi.subscription]]
+     name = "ifcounters"
+     origin = "openconfig-interfaces"
+     path = "/interfaces/interface/state/counters"
+     subscription_mode = "sample"
+     sample_interval = "10s"
  
-    [[inputs.gnmi.subscription]]
-       name = "component"
-       origin = "openconfig-system"
-       path = "/components/component/state/name"
-       subscription_mode = "sample"
-       sample_interval = "10s"
+   [[inputs.gnmi.subscription]]
+     name = "component"
+     origin = "openconfig-system"
+     path = "/components/component/state/name"
+     subscription_mode = "sample"
+     sample_interval = "10s"
+ 
+ [[outputs.prometheus_client]]
+   listen = ":9273"
+   path = "/metrics"
+   
+   expiration_interval = "5s" # metric过期时间. 0 == no expiration
+   export_timestamp = true    # 将timestamp 附加到metrics, 让prometheus以该时间戳为准（不使用prometheus的job scrape时间戳）
  ```
 
 一旦配置完成之后，启动 Telegraf 服务：
