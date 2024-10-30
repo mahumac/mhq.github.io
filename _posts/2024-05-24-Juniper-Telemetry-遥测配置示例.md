@@ -13,7 +13,7 @@ tags: [Prometheus, Juniper, Telemetry, 遥测]
 
 ​	[Telemetry configuration example](https://supportportal.juniper.net/s/article/telemetry-configuration-example?language=en_US)
 
-[	Junos Telemetry Interface User Guide | Junos OS | Juniper Networks](https://www.juniper.net/documentation/us/en/software/junos/interfaces-telemetry/index.html)
+​        [Junos Telemetry Interface User Guide | Junos OS | Juniper Networks](https://www.juniper.net/documentation/us/en/software/junos/interfaces-telemetry/index.html)
 
 使用 telegraf 为 gRPC（Junos 遥测接口或 JTI）和 gNMI 配置遥测的示例。
 
@@ -70,7 +70,7 @@ echo "deb https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stabl
   hostname = ""
 
 [[inputs.jti_openconfig_telemetry]]
-  servers = ["10.0.0.2:32767"] <<< Use switch IP.
+  servers = ["10.0.0.2:32767"]     # <<< 设备IP
 
   username = "root" 
   password = "Juniper"
@@ -140,7 +140,7 @@ echo "deb https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stabl
     path = "/metrics"
  
  [[inputs.gnmi]]
-    addresses = ["10.0.0.2:32767"]    # <<< Use switch IP.
+    addresses = ["10.0.0.2:32767"]    # <<< 设备IP
  
     [[inputs.gnmi.subscription]]
        name = "ifcounters"
@@ -195,7 +195,7 @@ root@ubuntu:/etc/telegraf# curl localhost:9273/metrics | grep sensors
 ```yaml
   - job_name: "JTI-HK1-1"
     scrape_interval: 1s
-    honor_timestamps: true		# 以metric自带的时间戳为准
+    honor_timestamps: true        # 以metric自带的时间戳为准
     honor_labels: true
     static_configs:
       - targets: ["localhost:9273"]
