@@ -25,7 +25,7 @@ $vmlist = @()
 
 foreach ( $VM in $allVM )
 {
-    $IP = Get-VM $VM.Name | Select-Object -ExpandProperty  VirtualNetworkAdapters | Select-Object -ExpandProperty IPv4Addresses
+    $IP = Get-VM $VM.Name | Select-Object -ExpandProperty VirtualNetworkAdapters | Select-Object -ExpandProperty IPv4Addresses
     $DiskSize = [int]( (Get-VM $VM.Name | Select-Object -ExpandProperty VirtualHardDisks).TotalSize /1024/1024/1024)
 
     $VM | Add-Member -Membertype noteproperty -Name IP -value $IP 
@@ -33,14 +33,14 @@ foreach ( $VM in $allVM )
     $VMList+=$VM
 }
 
-$VMlist | select  name,ComputerName,IP,Description,CreationTime,OperatingSystem,CPUCount,Memory,DiskSize | ft 
+$VMlist | Select name,ComputerName,IP,Description,CreationTime,OperatingSystem,CPUCount,Memory,DiskSize | ft 
 
 $allVM = Get-VM | Select-Object *
 $VMlist = @()
 
 foreach ( $VM in $allVM )
 {
-    $IP = Get-VM $VM.Name | Select-Object -ExpandProperty  VirtualNetworkAdapters | Select-Object -ExpandProperty IPv4Addresses
+    $IP = Get-VM $VM.Name | Select-Object -ExpandProperty VirtualNetworkAdapters | Select-Object -ExpandProperty IPv4Addresses
     $DiskSize = [int]( (Get-VM $VM.Name | Select-Object * ).TotalSize /1024/1024/1024)
     $VMObject = @()
     $VMObject = New-Object psobject
@@ -65,12 +65,12 @@ $VMlist | Export-Csv D:\VM_info.csv -Encoding UTF8 -Append -Force -ErrorAction:C
 # 查询Guest VM的IP、MAC、vNic ID
 
 ```powershell
-Get-VM DC01 | Select-Object -ExpandProperty VirtualNetworkAdapters | Select-Object Name,MacAddress,IPv4Addresses,ID
+Get-VM DC01 | Select-Object -ExpandProperty VirtualNetworkAdapters | Select-Object Name,MacAddress,IPv4Addresses,ID
 ```
 
 # 查询单台 VM 信息
 
 ```powershell
-Get-vm | select name,ComputerName,Description,CreationTime,Generation,CPUCount,Memory,TotalSize | ft
+Get-vm | Select Name,ComputerName,Description,CreationTime,Generation,CPUCount,Memory,TotalSize | ft
 ```
 
