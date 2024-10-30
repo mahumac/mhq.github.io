@@ -1,9 +1,9 @@
 ---
-title: Hello World ！
+title: Hello World
 date: 2020-02-04 12:12:12 +0800
-categories: [TOP_CATEGORIE, SUB_CATEGORIE]
+categories: [生活, 闲杂]
 description: 
-pin: true
+pin: false
 tags: [生活] 
 ---
 
@@ -13,7 +13,7 @@ Blog 就这么开通了。
 
 之前一直使用OneNote记录了大量笔记，后续因为OneNote一直不支持markdown格式，只能使用typora将md文件保存在本地。 
 
-很早就想搭建自己的 Blog ，不曾料想踩了很多坑。。。，就放弃了
+很早就想搭建自己的 Blog ，不曾料想踩了很多坑 ，遂放弃。。。
 
 现在 Blog 总算是搭建好了。
 
