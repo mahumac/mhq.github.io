@@ -11,9 +11,9 @@ tags: [Prometheus, Juniper, Telemetry, 遥测]
 
 参考文档：
 
-[Telemetry configuration example](https://supportportal.juniper.net/s/article/telemetry-configuration-example?language=en_US)
+​    https://supportportal.juniper.net/s/article/telemetry-configuration-example?language=en_US
 
-[Junos Telemetry Interface User Guide](https://www.juniper.net/documentation/us/en/software/junos/interfaces-telemetry/index.html)
+​    https://www.juniper.net/documentation/us/en/software/junos/interfaces-telemetry/index.html
 
 ## 配置方法
 
@@ -123,45 +123,45 @@ Telegraf 的配置文件，位于 `/etc/telegraf/telegraf.conf`
 
 这个插件使用 [gNMI](https://github.com/openconfig/reference/blob/master/rpc/gnmi/gnmi-specification.md) Subscribe 方法的遥测数据。这个输入插件是 与供应商无关，并且在支持 gNMI 规范的任何平台上都受支持。
 
-参考：[telegraf/plugins/inputs/gnmi at master · influxdata/telegraf](https://github.com/influxdata/telegraf/tree/master/plugins/inputs/gnmi)
+参考：https://github.com/influxdata/telegraf/tree/master/plugins/inputs/gnmi
 
- ```toml
- # inputs.gnmi
- [agent]
-   interval = "10s"
-   round_interval = true
-   metric_batch_size = 1000
-   metric_buffer_limit = 10000
-   collection_jitter = "0s"
-   flush_interval = "10s"
-   flush_jitter = "0s"
-   precision = "0s"
-   hostname = ""
- 
- [[inputs.gnmi]]
-   addresses = ["10.0.0.2:32767"]    # <<< 设备IP
- 
-   [[inputs.gnmi.subscription]]
-     name = "ifcounters"
-     origin = "openconfig-interfaces"
-     path = "/interfaces/interface/state/counters"
-     subscription_mode = "sample"
-     sample_interval = "10s"
- 
-   [[inputs.gnmi.subscription]]
-     name = "component"
-     origin = "openconfig-system"
-     path = "/components/component/state/name"
-     subscription_mode = "sample"
-     sample_interval = "10s"
- 
- [[outputs.prometheus_client]]
-   listen = ":9273"
-   path = "/metrics"
-   
-   expiration_interval = "5s" # metric过期时间. 0 == no expiration
-   export_timestamp = true    # 将timestamp 附加到metrics, 让prometheus以该时间戳为准（不使用prometheus的job scrape时间戳）
- ```
+```toml
+# inputs.gnmi
+[agent]
+  interval = "10s"
+  round_interval = true
+  metric_batch_size = 1000
+  metric_buffer_limit = 10000
+  collection_jitter = "0s"
+  flush_interval = "10s"
+  flush_jitter = "0s"
+  precision = "0s"
+  hostname = ""
+
+[[inputs.gnmi]]
+  addresses = ["10.0.0.2:32767"]    # <<< 设备IP
+
+  [[inputs.gnmi.subscription]]
+    name = "ifcounters"
+    origin = "openconfig-interfaces"
+    path = "/interfaces/interface/state/counters"
+    subscription_mode = "sample"
+    sample_interval = "10s"
+
+  [[inputs.gnmi.subscription]]
+    name = "component"
+    origin = "openconfig-system"
+    path = "/components/component/state/name"
+    subscription_mode = "sample"
+    sample_interval = "10s"
+
+[[outputs.prometheus_client]]
+  listen = ":9273"
+  path = "/metrics"
+  
+  expiration_interval = "5s" # metric过期时间. 0 == no expiration
+  export_timestamp = true    # 将timestamp 附加到metrics, 让prometheus以该时间戳为准（不使用prometheus的job scrape时间戳）
+```
 
 一旦配置完成之后，启动 Telegraf 服务：
 
