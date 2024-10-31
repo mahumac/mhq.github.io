@@ -59,7 +59,7 @@ webmaster_verifications:
 # Web Analytics Settings
 analytics:
   google:
-    id: # fill in your Google Analytics ID
+    id: G-34DX1J1D8P # fill in your Google Analytics ID
   goatcounter:
     id: # fill in your GoatCounter ID
   umami:
@@ -119,13 +119,13 @@ comments:
     issue_term: # < url | pathname | title | ...>
   # Giscus options › https://giscus.app
   giscus:
-    repo: # <gh-username>/<repo>
-    repo_id:
-    category:
-    category_id:
+    repo: mahumac/mahumac@github.io # <gh-username>/<repo>
+    repo_id: R_kgDONHuO3A
+    category: General
+    category_id: DIC_kwDONHuO3M4Cj2pj
     mapping: # optional, default to 'pathname'
     strict: # optional, default to '0'
-    input_position: # optional, default to 'bottom'
+    input_position: top # optional, default to 'bottom'
     lang: # optional, default to the value of `site.lang`
     reactions_enabled: # optional, default to the value of `1`
 
