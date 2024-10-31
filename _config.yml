@@ -119,14 +119,14 @@ comments:
     issue_term: # < url | pathname | title | ...>
   # Giscus options › https://giscus.app
   giscus:
-    repo: mahumac/mahumac@github.io # <gh-username>/<repo>
+    repo: mahumac/mahumac.github.io # <gh-username>/<repo>
     repo_id: R_kgDONHuO3A
     category: General
     category_id: DIC_kwDONHuO3M4Cj2pj
     mapping: # optional, default to 'pathname'
     strict: # optional, default to '0'
     input_position: top # optional, default to 'bottom'
-    lang: # optional, default to the value of `site.lang`
+    lang: zh-CN # optional, default to the value of `site.lang`
     reactions_enabled: # optional, default to the value of `1`
 
 # Self-hosted static assets, optional › https://github.com/cotes2020/chirpy-static-assets
