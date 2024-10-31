@@ -54,7 +54,7 @@ firewall-cmd --reload
 
 ### blackbox.yml 配置
 
-```
+```yaml
 modules:
 ...  ...
   icmp:
@@ -186,7 +186,7 @@ scrape_configs:
 
 * 通过metric   `probe_success`查询 icmp ping 是否成功 (success = 1 , faile = 0)
 
-```bash
+```
 probe_success{job=~"blackbox_icmp.*"}
 ```
 
