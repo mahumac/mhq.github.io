@@ -46,7 +46,7 @@ tags: [Windows, Wireshark, Vlan]
 
 不同厂商对应的注册表键值不相同，例如：
 
-1、Mellanox 网卡
+### 1、Mellanox 网卡
 
 来自 [Ethernet Registry Keys - NVIDIA Docs](https://docs.nvidia.com/networking/display/winofv55052000/ethernet+registry+keys)
 
@@ -55,7 +55,7 @@ tags: [Windows, Wireshark, Vlan]
 | *PriorityVLANTag | 3 (Packet Priority & VLAN Enabled) | 启用发送和接收 IEEE 802.3ac 标记帧，其中包括：<br />   -  用于优先级标记数据包的 802.1p QoS（服务质量）标记。<br />   -  VLAN 的 802.1Q 标记。<br />启用此功能后，Mellanox 驱动程序支持发送和接收带有 VLAN 和 QoS 标签的数据包。 |
 | PromiscuousVlan  | 0                                  | 指定是否启用混杂 VLAN。设置此参数后，所有带有 VLAN 标记的数据包都会传递到上层，而不执行任何过滤。有效值为：<br />       0：禁用<br />       1：启用 |
 
-2、intel 网卡
+### 2、intel 网卡
 
 来自 <https://www.intel.com/content/www/us/en/support/articles/000005498/ethernet-products.html> 
 
@@ -71,7 +71,7 @@ tags: [Windows, Wireshark, Vlan]
 | MonitorModeEnabled | **0** 禁用（不存储坏数据包，不存储 CRC，剥离 802.1Q vlan 标签）    <br />**1** 启用（存储坏数据包。存储 CRC。不要剥离 802.1Q vlan 标签） |      |
 | MonitorMode        | **0** 禁用（不存储坏数据包，不存储 CRC，剥离 802.1Q vlan 标签）    <br />**1** 启用（存储坏数据包。存储 CRC。不要剥离 802.1Q vlan 标签） |      |
 
-3、Broadcom 网卡
+### 3、Broadcom 网卡
 
 1. 搜索“TxCoalescingTicks”并确保这是您拥有的唯一实例。
 2. 右键单击实例编号（例如 0008）并添加一个新的字符串值。
