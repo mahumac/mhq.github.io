@@ -122,7 +122,7 @@ comments:
     repo: 'mahumac/mahumac.github.io' # <gh-username>/<repo>
     repo_id: 'R_kgDONHuO3A'
     category: 'General'
-    category_id: "DIC_kwDONHuO3M4Cj2pj"
+    category_id: 'DIC_kwDONHuO3M4Cj2pj'
     mapping: 'pathname' # optional, default to 'pathname'
     strict: # optional, default to '0'
     input_position: 'bottom' # optional 'top/bottom', default to 'bottom'
@@ -185,7 +185,7 @@ defaults:
   - scope:
       path: _drafts
     values:
-      comments: false
+      comments: true
   - scope:
       path: ""
       type: tabs # see `site.collections`
