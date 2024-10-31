@@ -21,13 +21,11 @@ tags: [Windows, Wireshark, Vlan]
 
 大多数“简单”网络适配器（例如广泛使用的 Realtek）及其驱动程序将简单地将 VLAN 标记传递给上层以处理这些。在这种情况下，Wireshark 将看到 VLAN 标记并可以处理和显示它们。
 
-一些更复杂的适配器将处理适配器和/或驱动程序中的 VLAN 标记。这包括一些 Intel 适配器，据我所知，还包括 Broadcom 千兆位芯片组（基于 NetXtreme / 57XX 的芯片）。此外，具有专用驱动程序的网卡也可能会遵循此路径，以防止来自“真实”驱动程序的干扰。
+一些更复杂的适配器将处理网卡适配器和 / 或驱动程序中的 VLAN 标记，这包括一些 Intel/Broadcom 网卡适配器。
 
 
 
 解决方法是修改Windows 注册表，改变网卡的模式，让其捕获报文后不主动去掉VLAN tag：
-
-
 
 打开 `compmgmt.msc` --> `设备管理器` --> `网络适配器`,
 
@@ -50,14 +48,12 @@ tags: [Windows, Wireshark, Vlan]
 
 1、Mellanox 网卡
 
-来自 <https://docs.nvidia.com/networking/m/view-rendered-page.action?abstractPageId=37851343> 
+来自 [Ethernet Registry Keys - NVIDIA Docs](https://docs.nvidia.com/networking/display/winofv55052000/ethernet+registry+keys)
 
-| 值名称           | **值**                                                       | 说明                                                         |
-| ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| *PriorityVLANTag | **3**: 主机是 ESX/Linux →（启用数据包优先级和 VLAN）    **1**: 主机是 Windows →（已启用优先级） | 启用发送和接收   IEEE 802.3ac 标记帧，其中包括：       802.1p QoS（服务质量）标记。tags for        priority-tagged packets.    VLAN 的 802.1Q 标记。      启用此功能后，Mellanox 驱动程序支持发送和接收带有 VLAN 和 QoS 标记的数据包。        
- 2、intel 网卡 |
-
-
+| **Value Name**   | **Default Value** | **Description** |
+| ---------------- | ------------------ | --------------- |
+| *PriorityVLANTag | 3 (Packet Priority & VLAN Enabled) | 启用发送和接收 IEEE 802.3ac 标记帧，其中包括：<br />   -  用于优先级标记数据包的 802.1p QoS（服务质量）标记。<br />   -  VLAN 的 802.1Q 标记。<br />启用此功能后，Mellanox 驱动程序支持发送和接收带有 VLAN 和 QoS 标签的数据包。 |
+| PromiscuousVlan  | 0                                  | 指定是否启用混杂 VLAN。设置此参数后，所有带有 VLAN 标记的数据包都会传递到上层，而不执行任何过滤。有效值为：<br />       0：禁用<br />       1：启用 |
 
 2、intel 网卡
 
@@ -72,8 +68,8 @@ tags: [Windows, Wireshark, Vlan]
 
 | 值名称             | **描述**                                                     |      |
 | ------------------ | ------------------------------------------------------------ | ---- |
-| MonitorModeEnabled | **0** 禁用（不存储坏数据包，不存储 CRC，剥离 802.1Q vlan 标签）    **1** 启用（存储坏数据包。存储 CRC。不要剥离 802.1Q vlan 标签） |      |
-| MonitorMode        | **0** 禁用（不存储坏数据包，不存储 CRC，剥离 802.1Q vlan 标签）    **1** 启用（存储坏数据包。存储 CRC。不要剥离 802.1Q vlan 标签） |      |
+| MonitorModeEnabled | **0** 禁用（不存储坏数据包，不存储 CRC，剥离 802.1Q vlan 标签）    <br />**1** 启用（存储坏数据包。存储 CRC。不要剥离 802.1Q vlan 标签） |      |
+| MonitorMode        | **0** 禁用（不存储坏数据包，不存储 CRC，剥离 802.1Q vlan 标签）    <br />**1** 启用（存储坏数据包。存储 CRC。不要剥离 802.1Q vlan 标签） |      |
 
 3、Broadcom 网卡
 
