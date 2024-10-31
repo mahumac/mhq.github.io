@@ -59,17 +59,22 @@ tags: [Windows, Wireshark, Vlan]
 
 来自 <https://www.intel.com/content/www/us/en/support/articles/000005498/ethernet-products.html> 
 
-要允许标记VLAN的帧传递到您的数据包捕获软件，请添加注册表双字和值，或更改注册表项的值。使用的驱动程序会影响所需的注册表更改：
+要允许标记VLAN的帧传递到您的数据包捕获软件，请添加注册表项 DWORD 类型 和 value，或更改注册表项的值。不同驱动程序对应的注册表DWORD名称不同：
 
-| 适配器驱动程序                         | 注册表项     |
-| -------------------------------------- | ------------ |
-| e1g, e1e, e1y                          | 启用监控模式 |
-| e1c, e1d, e1k, e1q, e1r, ixe, ixn, ixt | 监控模式     |
+| 适配器驱动程序                         | 注册表项 Registry Key |
+| -------------------------------------- | --------------------- |
+| e1g, e1e, e1y                          | MonitorModeEnabled    |
+| e1c, e1d, e1k, e1q, e1r, ixe, ixn, ixt | MonitorMode           |
 
-| 值名称             | **描述**                                                     |      |
-| ------------------ | ------------------------------------------------------------ | ---- |
-| MonitorModeEnabled | **0** 禁用（不存储坏数据包，不存储 CRC，剥离 802.1Q vlan 标签）    <br />**1** 启用（存储坏数据包。存储 CRC。不要剥离 802.1Q vlan 标签） |      |
-| MonitorMode        | **0** 禁用（不存储坏数据包，不存储 CRC，剥离 802.1Q vlan 标签）    <br />**1** 启用（存储坏数据包。存储 CRC。不要剥离 802.1Q vlan 标签） |      |
+创建或更改注册表项 （DWORD 类型）MonitorModeEnabled 时，将 dword 值设置为以下值之一：
+
+- **0** — 禁用（不存储错误数据包、不存储 CRC、去除 802.1Q VLAN 标记）
+- **1** — 已启用（存储恶意数据包。存储 CRC。不剥离 802.1Q vlan 标签）
+
+在创建或修改注册表项 （DWORD 类型） MonitorMode 时，将 dword 值设置为以下选项之一：
+
+- **0** — 禁用（不存储错误数据包、不存储 CRC、去除 802.1Q VLAN 标记）
+- **1** — 启用（接收错误/残帧/无效的 CRC 数据包。将 CRC 附加到数据包。不要按照正常操作去除 VLAN 标记并忽略发送到其他 VLAN 的数据包。
 
 ### 3、Broadcom 网卡
 
