@@ -9,7 +9,7 @@ tags: [Windows, Wireshark, Vlan]
 
 
 
-有朋友问，使用Windows PC去抓取交换机SPAN过来的流量，但是无论交换机怎么配置，PC上wireshark抓到的报文总是没有VLAN tag，是什么情况？
+有朋友问，使用Windows PC去抓取交换机镜像过来的流量，但是无论交换机怎么配置，Wireshark上抓到的报文总是没有VLAN tag，是什么情况？
 
 ## 原因
 
@@ -23,7 +23,7 @@ tags: [Windows, Wireshark, Vlan]
 
 一些更复杂的适配器将处理网卡适配器和 / 或驱动程序中的 VLAN 标记，这包括一些 Intel/Broadcom 网卡适配器。
 
-
+---------
 
 解决方法是修改Windows 注册表，改变网卡的模式，让其捕获报文后不主动去掉VLAN tag：
 
@@ -86,5 +86,5 @@ tags: [Windows, Wireshark, Vlan]
 
 
 
-重启电脑后再进行抓包，就会发现VLAN tag不会被网卡移除了.
+重启电脑后再进行抓包，就会发现VLAN tag不会被网卡移除了。
 
