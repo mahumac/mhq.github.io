@@ -424,20 +424,13 @@ yum install numactl-devel
 
 numa需要加深认识，留待以后详细了解，较好的文档如下：
 
-ovs+dpdk numa感知特性验证：
-https://blog.csdn.net/weixin_30478757/article/details/99426913
+[译文：ovs+dpdk中的“vHost User NUMA感知”特性 - 张浮生 - 博客园](https://www.cnblogs.com/neooelric/p/7090097.html)
 
-结合使用带有Open vSwitch *的数据平面开发套件来创建vHost用户非统一内存访问意识：
-https://software.intel.com/content/www/us/en/develop/articles/vhost-user-numa-awareness-in-open-vswitch-with-dpdk.html
+[9.3. 调度 NUMA 感知工作负载 | Red Hat Product Documentation](https://docs.redhat.com/zh_hans/documentation/openshift_container_platform/4.14/html/scalability_and_performance/cnf-scheduling-numa-aware-workloads-overview_numa-aware)
 
+[使用带有 Open vSwitch 的DPDK创建vHost 用户非一致性内存访问感知](https://www.intel.cn/content/www/cn/zh/developer/articles/technical/vhost-user-numa-awareness-in-open-vswitch-with-dpdk.html)
 
-
-```shell
-meson -Denable_kmods=true -Dexamples=all build -Dprefix=$PWD/dpdklib
-cd  build
-ninja
-ninja install
-```
+---------
 
 # 如何在 Intel 平台上使用 NIC 获得最佳性能
 
@@ -610,4 +603,4 @@ LnkSta2: Current De-emphasis Level: -6dB, EqualizationComplete+ ...
 
 \4. 查看需要加载哪些内核驱动，是否需要解除网口与内核驱动的绑定。有关 DPDK 设置和 Linux 内核要求的更多详细信息，请参阅从源代码和[Linux 驱动程序](https://doc.dpdk.org/guides/linux_gsg/linux_drivers.html#linux-gsg-linux-drivers)[编译 DPDK 目标](https://doc.dpdk.org/guides/linux_gsg/build_dpdk.html#linux-gsg-compiling-dpdk)。
 
-[下一个](https://doc.dpdk.org/guides/freebsd_gsg/index.html)[以前的](https://doc.dpdk.org/guides/linux_gsg/enable_func.html)
+参考文档：[11. How to get best performance with NICs on Intel platforms — Data Plane Development Kit 24.11.0-rc1 documentation](https://doc.dpdk.org/guides/linux_gsg/nic_perf_intel_platform.html)
