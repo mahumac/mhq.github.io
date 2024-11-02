@@ -9,7 +9,7 @@ tags: [Prometheus, Blackbox]
 
 Blackbox Exporter是Prometheus社区提供的官方黑盒监控解决方案，其允许用户通过：HTTP、HTTPS、DNS、TCP以及ICMP的方式对网络进行探测。
 
-## 下载安装 Blackbox Exporter
+# 下载安装 Blackbox Exporter
 
 ```bash
 cd ~
@@ -50,9 +50,9 @@ firewall-cmd --add-port=9115/tcp --permanent
 firewall-cmd --reload
 ```
 
-## ICMP 监控
+# ICMP 监控
 
-### blackbox.yml 配置
+## blackbox.yml 配置
 
 ```yaml
 modules:
@@ -66,7 +66,7 @@ modules:
       ttl: 5
 ```
 
-## 与Prometheus集成
+# 与Prometheus集成
 
 有三个机房，分别位于广州、上海、北京。在每个机房都各部署一台blackbox_exporter 探针（Prober），Prometheus服务器位于广州机房。
 
@@ -140,7 +140,7 @@ scrape_configs:
         replacement: 3.3.3.3                # BJ机房探针ip地址
 ```
 
-### blackbox_icmp_targets.yml 文件配置
+## blackbox_icmp_targets.yml 文件配置
 
 ```yaml
 ##################
@@ -180,9 +180,9 @@ scrape_configs:
     - 154.91.86.3
 ```
 
-### 查询 ICMP 丢包
+## 查询 ICMP 丢包
 
-#### 使用PromQL 计算 ICMP 丢包
+### 使用PromQL 计算 ICMP 丢包
 
 * 通过metric   `probe_success`查询 icmp ping 是否成功 (success = 1 , faile = 0)
 
@@ -200,7 +200,7 @@ probe_success{job=~"blackbox_icmp.*"}
 1- avg_over_time(probe_success{job=~"blackbox_icmp.*",instance=~"$instance",idc=~"$idc",profile=~"$profile",prober=~"BJ"}[$interval])
 ```
 
-####  使用PromQL 计算 ICMP RTT
+###  使用PromQL 计算 ICMP RTT
 
 * 通过以下以下PromQL, 计算60秒内的 平均 icmp rtt 值。
 
@@ -249,7 +249,7 @@ sum_over_time(
 sum_over_time(probe_success{job=~"blackbox_icmp.*"}[$interval])
 ```
 
-#### 计算 ICMP Jitter
+### 计算 ICMP Jitter
 
 ```bash
 # 计算 ICMP抖动 > 15ms 的IP
@@ -313,7 +313,7 @@ groups:
 
 -----------------------
 
-## 使用单个 Job 访问多个模块和目标
+# 使用单个 Job 访问多个模块和目标
 
 以 http、https 模块为例
 
@@ -380,3 +380,4 @@ modules:
   - http://www.baidu.com/
 ```
 
+# 未完待续
