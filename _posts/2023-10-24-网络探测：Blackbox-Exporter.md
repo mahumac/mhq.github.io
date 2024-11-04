@@ -50,6 +50,18 @@ firewall-cmd --add-port=9115/tcp --permanent
 firewall-cmd --reload
 ```
 
+## ICMP 权限
+
+ICMP 探测需要提升的权限才能运行：
+
+- *Windows*：需要管理员权限。
+
+- *Linux*：需要具有`cap_net_raw`用户组权限 或者 root 权限 。执行以下命令，修改`net.ipv4.ping_group_range`
+
+  ```bash
+  sysctl  net.ipv4.ping_group_range = 0  2147483647
+  ```
+
 # ICMP 监控
 
 ## blackbox.yml 配置
@@ -59,6 +71,8 @@ modules:
 ...  ...
   icmp:
     prober: icmp
+    icmp:
+      preferred_ip_protocol: ip4  # <<< 优先IPv4
   icmp_ttl5:
     prober: icmp
     timeout: 5s
@@ -68,7 +82,7 @@ modules:
 
 # 与Prometheus集成
 
-有三个机房，分别位于广州、上海、北京。在每个机房都各部署一台blackbox_exporter 探针（Prober），Prometheus服务器位于广州机房。
+假设有三个机房，分别位于GZ、SH、BJ。在每个机房都各部署一台blackbox_exporter 探针（Prober），Prometheus服务器位于GZ机房。
 
 ```yaml
 # Prometheus 配置
@@ -193,12 +207,10 @@ probe_success{job=~"blackbox_icmp.*"}
 * 通过以下以下PromQL，计算 60 秒内的 icmp ping 平均丢包率
 
 ```bash
-1- avg_over_time(probe_success{job=~"blackbox_icmp.*",instance=~"$instance",prober=~"BJ"}[60S])
+1- avg_over_time(probe_success{job=~"blackbox_icmp.*",instance=~"$instance"}[60S])
 ```
 
-```bash
-1- avg_over_time(probe_success{job=~"blackbox_icmp.*",instance=~"$instance",idc=~"$idc",profile=~"$profile",prober=~"BJ"}[$interval])
-```
+
 
 ###  使用PromQL 计算 ICMP RTT
 
@@ -234,7 +246,7 @@ $$
 # 排除probe_icmp_duration_seconds{}=0的情况, 使用内部子查询（Subquery，1s精度）
 avg_over_time(
     ( probe_icmp_duration_seconds{
-         job=~"blackbox_icmp.*", instance=~"156.248.72.*", idc=~"HK.*", phase="rtt", profile="OOB", prober=~"CT-OFC"
+         job=~"blackbox_icmp.*", instance=~"$instance", phase="rtt"
       } > 0
 	) [$interval:1s]
 )
@@ -242,7 +254,7 @@ avg_over_time(
 # 或者：
 sum_over_time(
     probe_icmp_duration_seconds{
-        job=~"blackbox_icmp.*", instance=~"$instance", idc=~"$idc", phase="rtt", profile="$profile", prober=~"$prober"
+        job=~"blackbox_icmp.*", instance=~"$instance", phase="rtt"
     } [$interval]
 ) 
 / ignoring(phase) 
@@ -256,7 +268,7 @@ sum_over_time(probe_success{job=~"blackbox_icmp.*"}[$interval])
 # 排除probe_icmp_duration_seconds{}=0的情况, 使用内部子查询（Subquery，1s精度）
 stddev_over_time(
 	( probe_icmp_duration_seconds{
-    	job=~"blackbox_icmp.*", instance=~"$instance", idc=~"$idc", profile=~"$profile", prober=~"$prober", phase="rtt"
+    	job=~"blackbox_icmp.*", instance=~"$instance", phase="rtt"
       } > 0
      ) [$interval:1s]
  ) > 0.015
