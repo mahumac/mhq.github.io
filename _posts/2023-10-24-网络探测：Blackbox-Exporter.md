@@ -219,22 +219,22 @@ probe_success{job=~"blackbox_icmp.*"}
 **注意：**如果出现 icmp 丢包，blackbox 会返回：
 
 ```tex
-probe_success{} = 0                 # 这个是预期的正确结果
-probe_icmp_duration_seconds{} = 0   # 这个是错误的结果，预期的结果应该是空值 或者一个无限大的值。
+probe_success{} = 0                 # 其值为 0 说明探测失败，这个是预期的正确结果
+probe_icmp_duration_seconds{} = 0   # icmp探测失败(即发生了丢包)，预期的结果应该是空值 或者一个无限大的值。这里返回值为`0`,不是预期的结果。
 ```
 
-比方说 发送了5个 icmp request，中间出现2次丢包，收到了3个 icmp reply :
+比方说，发送了5个 icmp request，中间出现2次丢包，收到了3个 icmp reply :
 
 ````bash
 # * 代表出现丢包
 11ms  *   *  9ms  10ms
 ````
 
-如果直接使用 `avg_over_time ( probe_icmp_duration_seconds {} )[5]` 来计算ICMP RTT，结果如下：
+如果直接使用 `avg_over_time ( probe_icmp_duration_seconds {} )[5s]` 来计算5秒内的 平均 ICMP RTT，结果如下：
 $$
 (11 + 0 + 0 + 9 + 10) / 5 = 30 / 5 = 6  毫秒
 $$
-明显不是预期的结果。预期的 RTT  应该是：
+明显得到一个错误的结果。预期的平均 RTT  应该是：
 $$
 (10 + 9 + 10) / 3 = 30 / 3 = 10  毫秒
 $$
