@@ -207,7 +207,7 @@ probe_success{job=~"blackbox_icmp.*"}
 * 通过以下以下PromQL，计算 60 秒内的 icmp ping 平均丢包率
 
 ```bash
-1- avg_over_time(probe_success{job=~"blackbox_icmp.*",instance=~"$instance"}[60S])
+1- avg_over_time(probe_success{job=~"blackbox_icmp.*",instance=~".+"}[60S])
 ```
 
 
@@ -246,7 +246,7 @@ $$
 # 排除probe_icmp_duration_seconds{}=0的情况, 使用内部子查询（Subquery，1s精度）
 avg_over_time(
     ( probe_icmp_duration_seconds{
-         job=~"blackbox_icmp.*", instance=~"$instance", phase="rtt"
+         job=~"blackbox_icmp.*", phase="rtt"
       } > 0
 	) [$interval:1s]
 )
@@ -254,7 +254,7 @@ avg_over_time(
 # 或者：
 sum_over_time(
     probe_icmp_duration_seconds{
-        job=~"blackbox_icmp.*", instance=~"$instance", phase="rtt"
+        job=~"blackbox_icmp.*", phase="rtt"
     } [$interval]
 ) 
 / ignoring(phase) 
@@ -268,7 +268,7 @@ sum_over_time(probe_success{job=~"blackbox_icmp.*"}[$interval])
 # 排除probe_icmp_duration_seconds{}=0的情况, 使用内部子查询（Subquery，1s精度）
 stddev_over_time(
 	( probe_icmp_duration_seconds{
-    	job=~"blackbox_icmp.*", instance=~"$instance", phase="rtt"
+    	job=~"blackbox_icmp.*", phase="rtt"
       } > 0
      ) [$interval:1s]
  ) > 0.015
