@@ -82,7 +82,23 @@ modules:
 
 # 与Prometheus集成
 
-假设有三个机房，分别位于GZ、SH、BJ。在每个机房都各部署一台blackbox_exporter 探针（Prober），Prometheus服务器位于GZ机房。
+假设有三个机房，分别位于GZ、SH、BJ。在每个机房都各部署一台blackbox_exporter 探针（Prober）:
+
+```tex
+                               -----------
+                        +--   | Prober-BJ |   --+
+                        |      -----------      |
+                        |                       |
+ -------------------    |      -----------      |         --------- 
+| prometheus server | --+--   | Prober-GZ |   --+---  ---| Targets |
+ -------------------    |      -----------      |         --------- 
+                        |                       |
+                        |      -----------      |
+                        +--   | Prober-SZ |   --+
+                               -----------
+```
+
+
 
 ```yaml
 # Prometheus 配置
